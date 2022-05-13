@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+    php-apache-environment:
+        container_name: php-apache-boilerplate
+        build:
+            context: ./
+            dockerfile: Dockerfile-php
+        volumes:
+            - ./src/:/var/www/html/
+        ports:
+            - 8888:80
+    mariadb:
+        container_name: mariadb-boilerplate
+        hostname: mariadb
+        image: mariadb:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpasswd
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=userpasswd
+            - MYSQL_DATABASE=db
+        volumes:
+            - ./mariadb:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/
